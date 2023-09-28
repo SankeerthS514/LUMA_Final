@@ -35,8 +35,8 @@ function UserRegistar(){
     }
 
     const handleSubmit = () => {
-        console.log(firstname);
-        console.log(lastname);
+        // console.log(firstname);
+        // console.log(lastname);
         setError(newError);
         // if(firstname==="" || lastname==="" || uid=="" || pass=="")
         // {
@@ -47,21 +47,28 @@ function UserRegistar(){
         password:pass})
         .then(response => {
           console.log(response);
-          if(response.data == 'sucess'){
-            toast.success(`Succesfully registered!`);
-            navigate("/login");
-        }else{
-            toast.error(`Employee ${uid} does not exist!`)
-        }
+            if(response.status == 200){
+                toast.success(`User: ${uid} succesfully registered!`);
+                navigate("/login");
+            }
+            else{
+                toast(`Employee already registered as user or ${uid} does not exist!`);
+            }
         })
-        .catch(error=>{console.log(error)});
-        console.log("sent");
-        navigate("/login");
-        alert("Data Submitted");}
+        .catch(error=>{
+            console.log(error);
+            toast.error(error.response.data.message);
+            console.log("Error");
+        });
+        // console.log("sent");
+        // navigate("/login");
+        // alert("Data Submitted");
+        }
     }
 
         
     return(
+    <>
     <div>
         <center>
             <Card>
@@ -114,9 +121,11 @@ function UserRegistar(){
             <br/>
         <br/>
         </center>
-        <ToastContainer
+        
+    </div>
+    <ToastContainer
 position="top-center"
-autoClose={1000}
+autoClose={2000}
 hideProgressBar={false}
 newestOnTop={false}
 closeOnClick
@@ -126,7 +135,7 @@ draggable
 pauseOnHover
 theme="dark"
 />
-    </div>
+    </>
     )
 }
 

@@ -86,12 +86,19 @@ const EditEmployee=() => {
         // firstName:firstname,lastName:lastname,designation:desig,
         //     deparment:department,emailId:mail,dob:dob,doj:doj
         console.log(employee);
-        const resp = await updateEmployee(idss,employee);
-        toast.success(`Updated ${fname}'s details!`);
-        navigate("/admin/list");
+        // const resp = await updateEmployee(idss,employee);
+        updateEmployee(idss,employee).then(response =>{
+            console.log(response);
+            toast(`Updated ${fname}'s details!`);
+            navigate("/admin/list");
+        })
+        // if(resp.)
+        // setTimeout(() => {
+        // }, 1000);
     };
 
     return (
+        <>
         <div className="container" style={{"padding":"10%"}}><center>
             <h3 className="text-success">Update Employee {fname}</h3>
             <br></br>
@@ -123,28 +130,30 @@ const EditEmployee=() => {
                 </div>
                 <div class="form-outline mb-4 form-group">
                     <input type="text" className="form-control" 
-                    placeholder="Date Of Joining(YYYY-MM-DD)" onChange={onDojChange}  value={doj.toLocaleDateString()}/>
+                    placeholder="Date Of Joining(YYYY-MM-DD)" onChange={onDojChange}  value={doj} disabled={true}/>
                 </div>
                 <div class="form-outline mb-4 form-group">
                     <input type="text" className="form-control" 
-                    placeholder="Date Of Birth(YYYY-MM-DD)" onChange={onDobChange}  value={dob.toLocaleDateString()}/>
+                    placeholder="Date Of Birth(YYYY-MM-DD)" onChange={onDobChange}  value={dob} disabled = {true}/>
                 </div>
                 <br />
                 <button className="btn btn-success" onClick={handleUpdateEmployee}>Update Employee</button>
             </form></center>
-            <ToastContainer
-position="top-center"
-autoClose={1000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="dark"
-/>
+            
         </div>
+        <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        />
+        </>
     );
 };
 
