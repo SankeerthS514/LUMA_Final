@@ -20,11 +20,12 @@ public class IssuedService {
     @Autowired
     private ItemRepository itemRepository; 
 
-   
+   //Service to get all issued items
     public List < Issued > getAllIssued() {
         return issuedRepository.findAll();
     }
     
+    //Service to get all issued items for a specific User
     public List<Item> getIssuedByempId(Long empid){
     	
     	List <Issued> Items = issuedRepository.findAllByempid(empid);
@@ -35,7 +36,7 @@ public class IssuedService {
     	return IssuedItems;
     }	
 
-    
+    //Service to get a specific issued item based on Issued ID
     public Issued getIssuedById(Long IssuedId) {
     	return issuedRepository.findById(IssuedId).get();
 	}

@@ -35,19 +35,21 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-   
+   //Service to get all employees
     public List < Employee > getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    
+    //Service to get an employee based on ID
     public Employee getEmployeeById(Long employeeId) {
     	return employeeRepository.findById(employeeId).get();
 	}
     
 
-   
+   //Service to create an employee
     public Employee createEmployee(Employee employee) throws RecordAlreadyExistsException {
+    	
+    	//Check if employee already exists
     	if(employeeRepository.existsById(employee.getId()))
     	{
     		throw new RecordAlreadyExistsException("This User Already Exists");
@@ -55,9 +57,12 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
    
+    //Service to update employee
     public ResponseEntity < Employee > updateEmployee(Long employeeId,
         @Valid @RequestBody Employee employeeDetails) throws ServiceNotFoundException {
-    	    Employee employee = employeeRepository.findById(employeeId)
+    	   
+    		//Get employee object based on ID
+    		Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow();
             employee.setFirstName(employeeDetails.getFirstName());
             employee.setLastName(employeeDetails.getLastName());
@@ -73,6 +78,7 @@ public class EmployeeService {
             return ResponseEntity.ok(updatedEmployee);
     }
 
+    //Service to delete an employee
     public Map < String, Boolean > deleteEmployee(Long employeeId)
     {
     

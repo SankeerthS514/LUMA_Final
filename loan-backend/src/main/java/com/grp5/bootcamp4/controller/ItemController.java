@@ -35,7 +35,7 @@ import com.grp5.bootcamp4.service.MasterService;
 public class ItemController {
     @Autowired
     private ItemService itemService;
-
+    //Get mapping to get all items
     @GetMapping("/item")
     public List < Item > getAllItem() {
         return itemService.getAllItem();
@@ -45,12 +45,15 @@ public class ItemController {
 //    public List<Master> getMasterId(@PathVariable(value = "id") Long masterId) {
 //    	return masterService.getMasterId(masterId);
 //	}
+    
+    //Get mapping to get a specific item based on item ID
     @GetMapping("/item/{id}")
     public Item getItemById(Long id) {
     	
     	return  itemService.getItemById(id);
 	}
-
+    
+    //Post mapping to create an item
     @PostMapping("/item")
     public Item createItem(@Valid @RequestBody Item item){
     	

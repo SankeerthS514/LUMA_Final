@@ -36,27 +36,32 @@ public class LoanMasterController {
     @Autowired
     private MasterService masterService;
 
+    //Get mapping to get all loans
     @GetMapping("/loan")
     public List < Master > getAllMaster() {
         return masterService.getAllMaster();
     }
-
+    
+    //Get mapping to get all loans based on loan ID
     @GetMapping("/loan/{id}")
     public List<Master> getMasterId(@PathVariable(value = "id") Long empid) {
     	return masterService.getMasterId(empid);
 	}
     
+    //Get mapping to get all approved loans based on Employee ID
     @GetMapping("/loan/approved/{id}")
     public List<Master> getApprovedMasterId(@PathVariable(value = "id") Long empid) {
     	return masterService.getApprovedMasterId(empid);
 	}
     
-
+    //Post mapping to create a loan
     @PostMapping("/loan")
     public Master createMaster(@Valid @RequestBody Master master) throws RecordAlreadyExistsException,ItemIsNotAvailableException {
     	
         return masterService.createMaster(master);
     }
+    
+    //Put mapping to update a loan
     @PutMapping("/loan/{id}")
     public ResponseEntity < Master > updateMaster(@PathVariable(value = "id") Long masterId,
         @Valid @RequestBody Master masterDetails) throws ServiceNotFoundException, CustomErrorMessage {

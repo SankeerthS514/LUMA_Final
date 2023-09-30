@@ -19,18 +19,21 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
     
+    //Service to get all items
     public List < Item > getAllItem() {
         return itemRepository.findAll();
     }
 
+    //Service to get an item based on Item ID
     public Item getItemById(Long id) {
     	
     	return  itemRepository.findById(id).get();
 	}
 	
-	  public Item createItem(Item item){
+    //Service to create an item
+	public Item createItem(Item item){
 		  
-	        return itemRepository.save(item);
-	    }
+	    return itemRepository.save(item);
+	}
 
 }

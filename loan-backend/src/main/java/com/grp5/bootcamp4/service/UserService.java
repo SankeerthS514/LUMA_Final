@@ -35,23 +35,26 @@ public class UserService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
+    //Service to get all users
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
-    
+    //Service to get a specific user by user ID
     public User getUserById(Long userId) {
     	return userRepository.findById(userId).get();
 	}
     
 
-    
+    //Service to create a user
     public User createUser(User user) throws RecordAlreadyExistsException, EmployeeDoesNotExistException{
+    	//Ensure a user with the same ID does not already exist
     	if(userRepository.existsById(user.getId()))
     	{
     		throw new RecordAlreadyExistsException("This User Already Exists");
     	} 
+    	
+    	//Ensure that the ID entered has a respective employee entry
     	if(!employeeRepository.existsById(user.getId())) {
     		throw new EmployeeDoesNotExistException("This ID is not linked to an existing employee");
     	}
@@ -59,6 +62,7 @@ public class UserService {
         
     }
     
+    //Service to update user details
     public ResponseEntity updateUser(Long userId, User userDetails) throws ServiceNotFoundException {
  
             User user = userRepository.findById(userId)
@@ -71,7 +75,7 @@ public class UserService {
             return ResponseEntity.ok(updatedUser);
     }
     
-
+    //Service to delete a user
     public Map < String, Boolean > deleteUser(@PathVariable(value = "id") Long userId)
     {
     
@@ -82,6 +86,7 @@ public class UserService {
         return response;
     }
     
+    //Validation to check username and password of user
     public String validateLogin(User user)
 
     {

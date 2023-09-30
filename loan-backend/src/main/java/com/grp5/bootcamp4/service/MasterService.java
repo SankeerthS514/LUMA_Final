@@ -48,19 +48,25 @@ public class MasterService {
     private IssuedRepository issuedRepository;
 
    
+    //Service to get all loans
     public List < Master > getAllMaster() {
         return masterRepository.findAll();
     }
     
-    
+    //Service to get a specific loan based on Loan ID
     public List<Master> getMasterId(Long empid) {
     	
     	return  masterRepository.findAllByEmpid(empid);
 	}
 
+    //Service to get the approved loans for a specific user
     public List<Master> getApprovedMasterId(Long empid) {
+    	
+    	//Get all loans of a specific user
     	List<Master> allLoan = masterRepository.findAllByEmpid(empid);
+    	
     	List<Master> allActiveLoan = new ArrayList<Master>();
+    	//filter through these loans and return only the loans marked approved
     	for(Master loan:allLoan) {
     		if(loan.getStatus().equals("Approved")) {
     			allActiveLoan.add(loan);
@@ -69,18 +75,24 @@ public class MasterService {
     	return allActiveLoan; 
 	}
     
+    //Service to create a new loan
     public Master createMaster(Master master) throws RecordAlreadyExistsException, ItemIsNotAvailableException {
+    	
+    	//Make sure the loan does not exist
     	if(masterRepository.existsById(master.getId()))
     	{
-    		throw new RecordAlreadyExistsException("This User Already Exists");
+    		throw new RecordAlreadyExistsException("This Loan Already Exists");
     	}
     	
+    	//Ensure the item being applied for exists and is available
     	List <Item> item = itemRepository.findByitemcatAndItemmakeAndItemdescAndStatus(master.getItem_cat(), master.getItem_make(), master.getItem_desc(),"Available");
     	if(item.isEmpty()) {
     		throw new ItemIsNotAvailableException("This Item Is Not Available");
     	}
+    	//Get the first available item
     	Item issuedItem = item.get(0);
     	master.setItem_value(issuedItem.getItemvalue());
+    	//Mark this item as reserved to make sure nobody else can apply for it
     	issuedItem.setStatus("Reserved");
     	itemRepository.save(issuedItem);
         return masterRepository.save(master);

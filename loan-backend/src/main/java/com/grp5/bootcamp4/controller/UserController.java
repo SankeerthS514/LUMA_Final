@@ -31,30 +31,35 @@ import com.grp5.bootcamp4.service.UserService;
 public class UserController {
     @Autowired
     private UserService userService;
-
+    
+    //Get mapping to get all the users
     @GetMapping("/user")
     public List<User> getAllUser() {
         return userService.getAllUser();
     }
-
+    
+    
+    //Get mapping to get users based on user ID/Employee ID
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable(value = "id") Long userId) {
     	return userService.getUserById(userId);
 	}
     
-
+    //Post mapping to create a User
     @PostMapping("/user")
     public User createUser(@Valid @RequestBody User user) throws RecordAlreadyExistsException,EmployeeDoesNotExistException{
     	return userService.createUser(user);
         
     }
     
+    //Put mapping to update the user password field - not used
     @PutMapping("/forget/{id}")
     public ResponseEntity < User > updateUser(@PathVariable(value = "id") Long userId,
         @Valid @RequestBody User userDetails) throws ServiceNotFoundException {
         return userService.updateUser(userId, userDetails);
     }
     
+    //Delete mapping to delete a user
     @DeleteMapping("/user/{id}")
     public Map < String, Boolean > deleteUser(@PathVariable(value = "id") Long userId)
     {

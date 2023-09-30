@@ -29,23 +29,25 @@ import com.grp5.bootcamp4.service.EmployeeService;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
-
+    //Get all the employees
     @GetMapping("/employees")
     public List < Employee > getAllEmployees() {
         return employeeService.getAllEmployees();
     }
-
+    //Get a specific employee based on employee ID
     @GetMapping("/employees/{id}")
     public Employee getEmployeeById(@PathVariable(value = "id") Long employeeId) {
     	return employeeService.getEmployeeById(employeeId);
 	}
     
-
+    //Post mapping for creating an employee
     @PostMapping("/employees")
     public Employee createEmployee(@Valid @RequestBody Employee employee) throws RecordAlreadyExistsException {
     	
         return employeeService.createEmployee(employee);
     }
+    
+    //Update mapping for updating a specific employee based on ID
     @PutMapping("/employees/{id}")
     public ResponseEntity < Employee > updateEmployee(@PathVariable(value = "id") Long employeeId,
         @Valid @RequestBody Employee employeeDetails) throws ServiceNotFoundException {
@@ -53,6 +55,7 @@ public class EmployeeController {
         return employeeService.updateEmployee(employeeId, employeeDetails);
     }
 
+    //Delete mapping to remove an employee
     @DeleteMapping("/employees/{id}")
     public Map < String, Boolean > deleteEmployee(@PathVariable(value = "id") Long employeeId)
     {

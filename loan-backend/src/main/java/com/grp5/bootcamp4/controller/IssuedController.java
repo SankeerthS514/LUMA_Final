@@ -22,16 +22,19 @@ public class IssuedController {
 	@Autowired
     private IssuedService issuedService;
 	
+	//Get mapping to get all the issued items
 	@GetMapping("/issued")
     public List < Issued > getAllIssued() {
         return issuedService.getAllIssued();
     }
-
+	
+	//Get mapping to get a specific issued item based on item ID
     @GetMapping("/issued/{id}")
     public Issued getissuedById(@PathVariable(value = "id") Long issuedId) {
     	return issuedService.getIssuedById(issuedId);
 	}
     
+    //Get mapping to get issued items for a specific employee based on Employee ID
     @GetMapping("/issued/items/{id}")
     public List<Item> getIssuedByempId(@PathVariable(value = "id") Long empid){
     	return issuedService.getIssuedByempId(empid);

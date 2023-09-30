@@ -30,17 +30,18 @@ public class LoanService {
 	@Autowired
 	private MasterService masterService;
     
-	
+	//Service to get all Loan Cards
 	public List < Loan > getAllLoan() {
         return loanRepository.findAll();
     }
 
-
+	//Service to get a Loan card based on loan ID
     public Loan getLoanById(@PathVariable(value = "id") Long loanId) {
     	return loanRepository.findById(loanId).get();
     	
 	}
     
+    //Service to get all active loan cards for a specific user
 	public List < Loan > getAllActiveLoan(Long empid) {
 		List<Master> allLoan = masterService.getApprovedMasterId(empid);
 		List<Loan> allActiveLoan = new ArrayList<Loan>();
@@ -50,6 +51,7 @@ public class LoanService {
     	return allActiveLoan;
 	}
 	
+	//Service to update a loan card
 	public ResponseEntity < Loan > updateLoan(Long loanId, Loan loanDetails) throws ConfigDataResourceNotFoundException {
 	        Loan loan = loanRepository.findById(loanId).get();
 	            
