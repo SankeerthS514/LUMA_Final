@@ -8,19 +8,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "items")
 public class Item {
 
     private long id;
+    @NotBlank
     private String itemcat;
-    
+    @NotBlank
     private String itemmake;
+    @NotBlank
     private String itemdesc;
-   
+    @NotNull
     private long itemvalue;
-    
+    @NotBlank
     private String status;
    
     

@@ -18,6 +18,10 @@ import com.grp5.bootcamp4.repo.ItemRepository;
 public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
+    
+    public List < Item > getAllItem() {
+        return itemRepository.findAll();
+    }
 
     public Item getItemById(Long id) {
     	

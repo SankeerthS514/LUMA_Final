@@ -36,10 +36,10 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-//    @GetMapping("/item")
-//    public List < Item > getAllItem() {
-//        return itemService.getAllItem();
-//    }
+    @GetMapping("/item")
+    public List < Item > getAllItem() {
+        return itemService.getAllItem();
+    }
 
 //    @GetMapping("/loan/{id}")
 //    public List<Master> getMasterId(@PathVariable(value = "id") Long masterId) {
