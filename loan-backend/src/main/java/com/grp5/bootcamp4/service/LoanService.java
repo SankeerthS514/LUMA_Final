@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.grp5.bootcamp4.entity.Loan;
 import com.grp5.bootcamp4.entity.Master;
+import com.grp5.bootcamp4.exceptions.CustomErrorMessage;
 import com.grp5.bootcamp4.exceptions.RecordAlreadyExistsException;
 import com.grp5.bootcamp4.repo.LoanRepository;
 import com.grp5.bootcamp4.repo.MasterRepository;
@@ -36,13 +37,16 @@ public class LoanService {
     }
 
 	//Service to get a Loan card based on loan ID
-    public Loan getLoanById(@PathVariable(value = "id") Long loanId) {
+    public Loan getLoanById(@PathVariable(value = "id") Long loanId) throws CustomErrorMessage {
+    	if(!loanRepository.existsById(loanId)) {
+    		throw new CustomErrorMessage("ID does not exist");
+    	}
     	return loanRepository.findById(loanId).get();
     	
 	}
     
     //Service to get all active loan cards for a specific user
-	public List < Loan > getAllActiveLoan(Long empid) {
+	public List < Loan > getAllActiveLoan(Long empid) throws CustomErrorMessage {
 		List<Master> allLoan = masterService.getApprovedMasterId(empid);
 		List<Loan> allActiveLoan = new ArrayList<Loan>();
     	for(Master loan:allLoan) {

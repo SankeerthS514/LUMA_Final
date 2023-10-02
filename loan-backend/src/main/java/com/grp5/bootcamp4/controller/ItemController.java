@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grp5.bootcamp4.entity.Employee;
 import com.grp5.bootcamp4.entity.Item;
 import com.grp5.bootcamp4.entity.Master;
+import com.grp5.bootcamp4.exceptions.CustomErrorMessage;
 import com.grp5.bootcamp4.exceptions.RecordAlreadyExistsException;
 import com.grp5.bootcamp4.service.EmployeeService;
 import com.grp5.bootcamp4.service.ItemService;
@@ -48,7 +49,7 @@ public class ItemController {
     
     //Get mapping to get a specific item based on item ID
     @GetMapping("/item/{id}")
-    public Item getItemById(Long id) {
+    public Item getItemById(Long id) throws CustomErrorMessage {
     	
     	return  itemService.getItemById(id);
 	}

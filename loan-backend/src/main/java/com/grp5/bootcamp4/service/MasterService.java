@@ -54,13 +54,21 @@ public class MasterService {
     }
     
     //Service to get a specific loan based on Loan ID
-    public List<Master> getMasterId(Long empid) {
+    public List<Master> getMasterId(Long loanid) throws CustomErrorMessage  {
     	
-    	return  masterRepository.findAllByEmpid(empid);
+    	if(!masterRepository.existsById(loanid)) {
+    		throw new CustomErrorMessage("ID does not exist");
+    	}
+    	
+    	return  masterRepository.findAllByEmpid(loanid);
 	}
 
     //Service to get the approved loans for a specific user
-    public List<Master> getApprovedMasterId(Long empid) {
+    public List<Master> getApprovedMasterId(Long empid) throws CustomErrorMessage  {
+    	
+    	if(!masterRepository.existsById(empid)) {
+    		throw new CustomErrorMessage("ID does not exist");
+    	}
     	
     	//Get all loans of a specific user
     	List<Master> allLoan = masterRepository.findAllByEmpid(empid);
@@ -97,7 +105,7 @@ public class MasterService {
     	itemRepository.save(issuedItem);
         return masterRepository.save(master);
     }
-    public ResponseEntity < Master > updateMaster(Long masterId,
+    public Master updateMaster(Long masterId,
             @Valid @RequestBody Master masterDetails) throws ServiceNotFoundException,CustomErrorMessage {
         	    Master master = masterRepository.findById(masterId)
                     .orElseThrow();
@@ -147,7 +155,10 @@ public class MasterService {
                   Returneditem.setStatus("Available");
                   itemRepository.save(Returneditem);
                   break;
-           
+                case "Rejected":
+                  if(!master.getStatus().equals("Pending")) {
+            	    	throw new CustomErrorMessage("Action has already been taken on your loan");
+            	  }
                 	
                   
               }
@@ -155,6 +166,6 @@ public class MasterService {
                 master.setStatus(masterDetails.getStatus());
                 final Master updatedMaster = masterRepository.save(master);
                 
-                return ResponseEntity.ok(updatedMaster);
+                return updatedMaster;
         }
 }

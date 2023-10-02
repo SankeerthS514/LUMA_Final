@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grp5.bootcamp4.entity.Employee;
 import com.grp5.bootcamp4.entity.Item;
 import com.grp5.bootcamp4.entity.Master;
+import com.grp5.bootcamp4.exceptions.CustomErrorMessage;
 import com.grp5.bootcamp4.exceptions.RecordAlreadyExistsException;
 import com.grp5.bootcamp4.repo.EmployeeRepository;
 import com.grp5.bootcamp4.repo.ItemRepository;
@@ -25,8 +26,11 @@ public class ItemService {
     }
 
     //Service to get an item based on Item ID
-    public Item getItemById(Long id) {
+    public Item getItemById(Long id) throws CustomErrorMessage  {
     	
+    	if(!itemRepository.existsById(id)) {
+    		throw new CustomErrorMessage("ID does not exist");
+    	}
     	return  itemRepository.findById(id).get();
 	}
 	

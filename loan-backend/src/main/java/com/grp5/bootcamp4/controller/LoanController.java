@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grp5.bootcamp4.entity.Loan;
+import com.grp5.bootcamp4.exceptions.CustomErrorMessage;
 import com.grp5.bootcamp4.repo.LoanRepository;
 import com.grp5.bootcamp4.service.LoanService;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v2")
 public class LoanController{
@@ -36,14 +37,14 @@ public class LoanController{
 
     //Get mapping to get a specific loan card based on loan id
     @GetMapping("/loan/{id}")
-    public Loan getLoanById(@PathVariable(value = "id") Long loanId) {
+    public Loan getLoanById(@PathVariable(value = "id") Long loanId) throws CustomErrorMessage{
     	return loanService.getLoanById(loanId);
     	
 	}
     
     //Get mapping to get all approved loan cards based on the Employee ID
     @GetMapping("/loan/approved/{id}")
-    public List<Loan> getApprovedLoanById(@PathVariable(value = "id") Long empid) {
+    public List<Loan> getApprovedLoanById(@PathVariable(value = "id") Long empid) throws CustomErrorMessage {
     	return loanService.getAllActiveLoan(empid);
     
 	}

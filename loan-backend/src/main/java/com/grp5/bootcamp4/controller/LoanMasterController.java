@@ -44,13 +44,13 @@ public class LoanMasterController {
     
     //Get mapping to get all loans based on loan ID
     @GetMapping("/loan/{id}")
-    public List<Master> getMasterId(@PathVariable(value = "id") Long empid) {
+    public List<Master> getMasterId(@PathVariable(value = "id") Long empid) throws CustomErrorMessage{
     	return masterService.getMasterId(empid);
 	}
     
     //Get mapping to get all approved loans based on Employee ID
     @GetMapping("/loan/approved/{id}")
-    public List<Master> getApprovedMasterId(@PathVariable(value = "id") Long empid) {
+    public List<Master> getApprovedMasterId(@PathVariable(value = "id") Long empid) throws CustomErrorMessage {
     	return masterService.getApprovedMasterId(empid);
 	}
     
@@ -63,7 +63,7 @@ public class LoanMasterController {
     
     //Put mapping to update a loan
     @PutMapping("/loan/{id}")
-    public ResponseEntity < Master > updateMaster(@PathVariable(value = "id") Long masterId,
+    public Master updateMaster(@PathVariable(value = "id") Long masterId,
         @Valid @RequestBody Master masterDetails) throws ServiceNotFoundException, CustomErrorMessage {
         
         return masterService.updateMaster(masterId, masterDetails);
